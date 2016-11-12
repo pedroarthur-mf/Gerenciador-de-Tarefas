@@ -121,7 +121,7 @@ void MainWindow::realtimeDataSlot(){
     //Graficis de Energia
     this->supply.concatenate();
     ui->grafSupply->graph(0)->addData(key, this->supply.calculateSupply());
-    ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining()); //Está dando erro executar (A janela fecha).
+   // ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining()); //Está dando erro executar (A janela fecha).
 
     ui->grafSupply->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafSupply->replot();
