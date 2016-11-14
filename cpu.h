@@ -11,9 +11,16 @@ private:
     QString content;
     bool openFile();
     void concatenate();
+    QVector<int> cpuUsage;
+    QVector<int> cpuTotal;
+    QVector<int> prevCpuUsage;
+    QVector<int> prevCpuTotal;
+
 
 public:
     CPU();
+    int getNumCPUs();
+    void calculate();
 };
 
 #endif // CPU_H

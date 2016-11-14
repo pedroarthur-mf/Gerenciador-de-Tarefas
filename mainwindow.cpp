@@ -12,6 +12,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // GRÁFICO DO USO DE CPU DO COMPUTADOR:
+
+
     ui->grafCPU->addGraph(); // blue line
     ui->grafCPU->graph(0)->setPen(QPen(QColor(40, 110, 255)));
     ui->grafCPU->graph(0)->setName("CPU0");
@@ -21,6 +23,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->grafCPU->addGraph(); // black line
     ui->grafCPU->graph(2)->setPen(QPen(QColor(0, 0, 0)));
     ui->grafCPU->graph(2)->setName("CPU2");
+    ui->grafCPU->addGraph(); // SOME line
+    ui->grafCPU->graph(3)->setPen(QPen(QColor(157, 52, 80)));
+    ui->grafCPU->graph(3)->setName("CPU3");
 
     // GRÁFICO DO USO DE MEMÓRIA DO COMPUTADOR:
     ui->grafMEM->addGraph(); // blue line
@@ -66,7 +71,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->grafTimeSupply->xAxis->setTicker(timeTicker);
     ui->grafTimeSupply->axisRect()->setupFullAxesBox();
-    ui->grafTimeSupply->yAxis->setRange(-0.1, 10);
+    ui->grafTimeSupply->yAxis->setRange(-0.1, 8.1);
 
 
     // make left and bottom axes transfer their ranges to right and top axes:
@@ -103,6 +108,7 @@ void MainWindow::realtimeDataSlot(){
     ui->grafCPU->graph(0)->addData(key, 1);
     ui->grafCPU->graph(1)->addData(key, 3);
     ui->grafCPU->graph(2)->addData(key, 5);
+    ui->grafCPU->graph(3)->addData(key, 40);
 
     // Adicionar informações para o gráfico da Memória:
     // graph(0) = Memória
@@ -118,16 +124,15 @@ void MainWindow::realtimeDataSlot(){
     ui->grafMEM->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafMEM->replot();
 
-    //Graficis de Energia
+    //Graficos de Energia
     this->supply.concatenate();
     ui->grafSupply->graph(0)->addData(key, this->supply.calculateSupply());
-   // ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining()); //Está dando erro executar (A janela fecha).
+    ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining()); //Está dando erro executar (A janela fecha).
 
     ui->grafSupply->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafSupply->replot();
 
     ui->grafTimeSupply->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafTimeSupply->replot();
-
 
 }

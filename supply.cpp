@@ -34,9 +34,8 @@ double Supply::calculateSupply(){
 }
 
 double Supply::timeRemaining(){
-    int full = this->infos.value("POWER_SUPPLY_CHARGE_FULL");
-    int now = this->infos.value("POWER_SUPPLY_CHARGE_NOW");
-    int currentNow = this->infos.value("POWER_SUPPLY_CORRENT_NOW");
-
-    return (full - now)/currentNow;
+    //double full = this->infos.value("POWER_SUPPLY_CHARGE_FULL");
+    double now = this->infos.value("POWER_SUPPLY_CHARGE_NOW");
+    double currentNow = this->infos.value("POWER_SUPPLY_CURRENT_NOW");
+    return now/currentNow;
 }
