@@ -2,7 +2,9 @@
 
 CPU::CPU()
 {
-    // TODO: Preencher o atual com qualquer coisa pra começar aqui diferente de errado.
+    this->cpuTotal.append(100);
+    this->cpuUsage.append(100);
+    this->numCPUs = 0;
 }
 
 bool CPU::openFile(){
@@ -20,29 +22,46 @@ void CPU::concatenate(){
     if(this->openFile()){
         QStringList lines = this->content.split("\n");
         QStringList column;
-        int i = 0;
-        this->numCPUs = 0;
 
         // LER ATÉ AS QUE NÃO COMEÇAM COM cpu
-        while(lines[i][0] != 'c' && lines[i][1] != 'p' && lines[i][2] != 'u'){
-            // IGNORAR A PRIMEIRA LINHA
-            if(i == 0) continue;
+        for(int i = 1; i < lines.size(); i++){
             column = lines.at(i).split(" ");
-            this->prevCpuUsage = this->cpuUsage;
-            this->prevCpuTotal = this->cpuTotal;
-            this->cpuUsage.append(column.at(1).toInt() + column.at(2).toInt() + column.at(3).toInt());
-            this->cpuTotal.append(column.at(1).toInt() + column.at(2).toInt() + column.at(3).toInt() + column.at(4).toInt() + column.at(5).toInt() );
-            i++;
-            this->numCPUs++;
+            if(column.at(0).contains("cpu")){
+                this->prevCpuUsage = this->cpuUsage;
+                this->prevCpuTotal = this->cpuTotal;
+                this->cpuUsage.append(column.at(1).toLong() + column.at(2).toLong() + column.at(3).toLong());
+                this->cpuTotal.append(column.at(1).toLong() + column.at(2).toLong() + column.at(3).toLong() + column.at(4).toLong() + column.at(5).toLong() );
+                this->numCPUs++;
+            }
+            else{
+                break;
+            }
         }
     }
 }
 
 void CPU::calculate(){
-    // Tem o que ter o valor anterior
-    // (O que ta usando do atual - o que ta usando do anterior)/(O total do atual - o total do anterior)
+
+    if(this->openFile()){
+        QStringList lines = this->content.split("\n");
+        QStringList column;
+        double data;
+        for(int i = 1; i <= this->numCPUs; i++){
+            column = lines.at(i).split(" ");
+            this->prevCpuUsage[i-1] = this->cpuUsage[i-1];
+            this->prevCpuTotal[i-1] = this->cpuTotal[i-1];
+            this->cpuUsage.append(column.at(1).toInt() + column.at(2).toInt() + column.at(3).toInt());
+            this->cpuTotal.append(column.at(1).toInt() + column.at(2).toInt() + column.at(3).toInt() + column.at(4).toInt() + column.at(5).toInt() );
+            data = ((this->cpuUsage.at(i-1) - this->prevCpuUsage.at(i-1))*100.0)/(this->cpuTotal.at(i-1) - this->prevCpuTotal.at(i-1) + 1);
+            this->dataCpus.append(data);
+        }
+    }
 }
 
 int CPU::getNumCPUs(){
     return this->numCPUs;
+}
+
+QVector<double> CPU::getData(){
+    return this->dataCpus;
 }

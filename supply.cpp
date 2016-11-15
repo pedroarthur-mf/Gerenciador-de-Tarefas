@@ -3,17 +3,20 @@
 Supply::Supply(){ }
 
 bool Supply::openFile(){
-    QFile memFile("/sys/class/power_supply/BAT1/uevent");
+    QFile supplyFile("/sys/class/power_supply/BAT1/uevent");
 
-    if (memFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        this->content = memFile.readAll();
-        memFile.close();
+    if(!supplyFile.exists()){
+       supplyFile.setFileName("/sys/class/power_supply/BAT0/uevent");
+    }
+
+    if (supplyFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        this->content = supplyFile.readAll();
+        supplyFile.close();
         return true;
     }
     return false;
 }
 
-//TUDO CERTO, TAMBÉM:
 void Supply::concatenate(){
     if( this->openFile()){
         QStringList lines = this->content.split("\n");
@@ -34,7 +37,6 @@ double Supply::calculateSupply(){
 }
 
 double Supply::timeRemaining(){
-    //double full = this->infos.value("POWER_SUPPLY_CHARGE_FULL");
     double now = this->infos.value("POWER_SUPPLY_CHARGE_NOW");
     double currentNow = this->infos.value("POWER_SUPPLY_CURRENT_NOW");
     return now/currentNow;

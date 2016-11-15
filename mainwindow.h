@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <cstdlib>
 #include "memory.h"
+#include "cpu.h"
 #include "supply.h"
 
 namespace Ui {
@@ -26,6 +27,7 @@ private:
     Ui::MainWindow *ui;
     QTimer dataTimer;
     Memory memory;
+    CPU cpu;
     Supply supply;
 };
 

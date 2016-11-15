@@ -11,21 +11,21 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->widget_3->load(QUrl::fromLocalFile("home/pedroarthur-mf/MeuProjeto/index.html"));
 
 
-    // GRÁFICO DO USO DE CPU DO COMPUTADOR:
-
-
-    ui->grafCPU->addGraph(); // blue line
-    ui->grafCPU->graph(0)->setPen(QPen(QColor(40, 110, 255)));
-    ui->grafCPU->graph(0)->setName("CPU0");
-    ui->grafCPU->addGraph(); // red line
-    ui->grafCPU->graph(1)->setPen(QPen(QColor(255, 110, 40)));
-    ui->grafCPU->graph(1)->setName("CPU1");
-    ui->grafCPU->addGraph(); // black line
-    ui->grafCPU->graph(2)->setPen(QPen(QColor(0, 0, 0)));
-    ui->grafCPU->graph(2)->setName("CPU2");
-    ui->grafCPU->addGraph(); // SOME line
-    ui->grafCPU->graph(3)->setPen(QPen(QColor(157, 52, 80)));
-    ui->grafCPU->graph(3)->setName("CPU3");
+    //GRÁFICO DO USO DE CPU DO COMPUTADOR:
+    QVector<QColor> colors;
+    colors.append(Qt::red);
+    colors.append(Qt::blue);
+    colors.append(Qt::black);
+    colors.append(Qt::green);
+    colors.append(Qt::yellow);
+    colors.append(Qt::magenta);
+    this->cpu.concatenate();
+    QString name = "CPU";
+    for(int i = 0; i < this->cpu.getNumCPUs(); i++){
+        ui->grafCPU->addGraph();
+        ui->grafCPU->graph(i)->setPen(QPen(colors.at(i)));
+        ui->grafCPU->graph(i)->setName(name + QString::number(i));
+    }
 
     // GRÁFICO DO USO DE MEMÓRIA DO COMPUTADOR:
     ui->grafMEM->addGraph(); // blue line
@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
     timeTicker->setTimeFormat("%h:%m:%s");
     ui->grafCPU->xAxis->setTicker(timeTicker);
     ui->grafCPU->axisRect()->setupFullAxesBox();
-    ui->grafCPU->yAxis->setRange(-0.3, 100.5);
+    ui->grafCPU->yAxis->setRange(-0.3, 100.03);
 
     ui->grafMEM->xAxis->setTicker(timeTicker);
     ui->grafMEM->axisRect()->setupFullAxesBox();
@@ -105,10 +105,10 @@ void MainWindow::realtimeDataSlot(){
     double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
 
     // Adicionar informação para o gráfico da CPU:
-    ui->grafCPU->graph(0)->addData(key, 1);
-    ui->grafCPU->graph(1)->addData(key, 3);
-    ui->grafCPU->graph(2)->addData(key, 5);
-    ui->grafCPU->graph(3)->addData(key, 40);
+    this->cpu.calculate();
+    for(int i = 0; i < 4; i++){
+         ui->grafCPU->graph(i)->addData(key, this->cpu.getData().at(i));
+    }
 
     // Adicionar informações para o gráfico da Memória:
     // graph(0) = Memória
