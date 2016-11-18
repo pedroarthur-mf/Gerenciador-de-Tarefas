@@ -73,7 +73,6 @@ void MainWindow::configCPUGraph(){
     colors.append(Qt::yellow);
     colors.append(Qt::magenta);
 
-    this->cpu.concatenate(); //TODO: Colocar a parte do "concatenate" para o construtor!
     QString name = "CPU";
     for(int i = 0; i < this->cpu.getNumCPUs(); i++){
         ui->grafCPU->addGraph();
@@ -179,8 +178,9 @@ void MainWindow::slotCPUGraph(){
 
     // Adicionar informação para o gráfico da CPU:
     this->cpu.calculate();
+
     for(int i = 0; i < 4; i++){
-         ui->grafCPU->graph(i)->addData(key, this->cpu.getData().at(i));
+         ui->grafCPU->graph(i)->addData(key, cpu.getDataCPU(i));
     }
 
     ui->grafCPU->xAxis->setRange(key, 60, Qt::AlignRight);

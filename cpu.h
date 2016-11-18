@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QVector>
+#include <iostream>
 
 class CPU
 {
@@ -10,19 +11,19 @@ private:
     int numCPUs;
     QString content;
     bool openFile();
-    QVector<long> cpuUsage;
-    QVector<long> cpuTotal;
-    QVector<long> prevCpuUsage;
-    QVector<long> prevCpuTotal;
-    QVector<double> dataCpus;
-
+    QVector<long> cpuTime;
+    QVector<long> cpuIdle;
+    QVector<long> prevCpuTime;
+    QVector<long> prevCpuIdle;
+//    QVector<long double> dataCpus;
 
 public:
     CPU();
     int getNumCPUs();
     void calculate();
     void concatenate();
-    QVector<double> getData();
+//    QVector<long double> getData();
+    double getDataCPU(int i);
 };
 
 #endif // CPU_H
