@@ -53,7 +53,7 @@ void CPU::calculate(){
             this->cpuUsage.append(column.at(1).toInt() + column.at(2).toInt() + column.at(3).toInt());
             this->cpuTotal.append(column.at(1).toInt() + column.at(2).toInt() + column.at(3).toInt() + column.at(4).toInt() + column.at(5).toInt() );
             data = ((this->cpuUsage.at(i-1) - this->prevCpuUsage.at(i-1))*100.0)/(this->cpuTotal.at(i-1) - this->prevCpuTotal.at(i-1) + 1);
-            this->dataCpus.append(data);
+            this->dataCpus.append(i*10);
         }
     }
 }

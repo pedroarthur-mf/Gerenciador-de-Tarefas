@@ -6,12 +6,65 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->firstTime = true;
 
-    // GRÁFICO DAS BOLHAS:
-    ui->widget_3->load(QUrl::fromLocalFile("home/pedroarthur-mf/MeuProjeto/index.html"));
+    connect(this, SIGNAL(signalMemoryGraph()), SLOT(slotMemoryGraph()));
+    connect(this,SIGNAL(signalCPUGraph()),SLOT(slotCPUGraph()));
+    connect(this, SIGNAL(signalSupplyGraph()), SLOT(slotSupplyGraph()));
 
+    configMemoryGraph();
+    configCPUGraph();
+    configSupplyGraph();
 
-    //GRÁFICO DO USO DE CPU DO COMPUTADOR:
+    run();
+
+//    // GRÁFICO DAS BOLHAS:
+//    ui->widget_3->load(QUrl::fromLocalFile("../index.html"));
+
+//    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
+//    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
+//    dataTimer.start(0); // Interval 0 means to refresh as fast as possible
+
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+
+void MainWindow::run(){
+    if(this->firstTime){
+        this->thMemory = std::thread(&MainWindow::memoryGraph, this);
+        this->thCPU = std::thread(&MainWindow::CPUGraph, this);
+        this->thSupply = std::thread(&MainWindow::SupplyGraph, this);
+        this->firstTime = false;
+    }
+}
+
+void MainWindow::configMemoryGraph(){
+    ui->grafMEM->addGraph();
+    ui->grafMEM->graph(0)->setPen(QPen(QColor(40, 110, 255)));
+    ui->grafMEM->graph(0)->setName("Memory");
+
+    ui->grafMEM->addGraph();
+    ui->grafMEM->graph(1)->setPen(QPen(QColor(255, 110, 40)));
+    ui->grafMEM->graph(1)->setName("Swap");
+
+    ui->grafMEM->legend->setVisible(true);
+
+    QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+    timeTicker->setTimeFormat("%h:%m:%s");
+
+    ui->grafMEM->xAxis->setTicker(timeTicker);
+    ui->grafMEM->axisRect()->setupFullAxesBox();
+    ui->grafMEM->yAxis->setRange(-0.3, 100.5);
+
+    connect(ui->grafMEM->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafMEM->xAxis2, SLOT(setRange(QCPRange)));
+    connect(ui->grafMEM->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafMEM->yAxis2, SLOT(setRange(QCPRange)));
+
+}
+
+void MainWindow::configCPUGraph(){
     QVector<QColor> colors;
     colors.append(Qt::red);
     colors.append(Qt::blue);
@@ -19,7 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     colors.append(Qt::green);
     colors.append(Qt::yellow);
     colors.append(Qt::magenta);
-    this->cpu.concatenate();
+
+    this->cpu.concatenate(); //TODO: Colocar a parte do "concatenate" para o construtor!
     QString name = "CPU";
     for(int i = 0; i < this->cpu.getNumCPUs(); i++){
         ui->grafCPU->addGraph();
@@ -27,14 +81,20 @@ MainWindow::MainWindow(QWidget *parent) :
         ui->grafCPU->graph(i)->setName(name + QString::number(i));
     }
 
-    // GRÁFICO DO USO DE MEMÓRIA DO COMPUTADOR:
-    ui->grafMEM->addGraph(); // blue line
-    ui->grafMEM->graph(0)->setPen(QPen(QColor(40, 110, 255)));
-    ui->grafMEM->graph(0)->setName("Memory");
-    ui->grafMEM->addGraph(); // red line
-    ui->grafMEM->graph(1)->setPen(QPen(QColor(255, 110, 40)));
-    ui->grafMEM->graph(1)->setName("Swap");
+    ui->grafCPU->legend->setVisible(true);
 
+    QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
+    timeTicker->setTimeFormat("%h:%m:%s");
+
+    ui->grafCPU->xAxis->setTicker(timeTicker);
+    ui->grafCPU->axisRect()->setupFullAxesBox();
+    ui->grafCPU->yAxis->setRange(-0.3, 100.03);
+
+    connect(ui->grafCPU->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafCPU->xAxis2, SLOT(setRange(QCPRange)));
+    connect(ui->grafCPU->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafCPU->yAxis2, SLOT(setRange(QCPRange)));
+}
+
+void MainWindow::configSupplyGraph(){
     //GRAFICO DE CARGA DA BATERIA
     ui->grafSupply->addGraph(); // blue line
     ui->grafSupply->graph(0)->setPen(QPen(QColor(40, 110, 255)));
@@ -47,22 +107,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->grafTimeSupply->graph(0)->setName("Tempo de Descarga");
 
     // Adicionar as legendas de ambos os gráficos:
-    ui->grafCPU->legend->setVisible(true);
-    ui->grafMEM->legend->setVisible(true);
     ui->grafSupply->legend->setVisible(true);
     ui->grafTimeSupply->legend->setVisible(true);
 
     // Gerenciamento do tempo dos gráficos (CPU e Mem) e dos tamanhos:
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
     timeTicker->setTimeFormat("%h:%m:%s");
-    ui->grafCPU->xAxis->setTicker(timeTicker);
-    ui->grafCPU->axisRect()->setupFullAxesBox();
-    ui->grafCPU->yAxis->setRange(-0.3, 100.03);
-
-    ui->grafMEM->xAxis->setTicker(timeTicker);
-    ui->grafMEM->axisRect()->setupFullAxesBox();
-    ui->grafMEM->yAxis->setRange(-0.3, 100.5);
-
 
     // Gerenciamento do tempo dos gráficos de Carga e Tempo de Descarga e dos tamanhos:
     ui->grafSupply->xAxis->setTicker(timeTicker);
@@ -75,11 +125,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // make left and bottom axes transfer their ranges to right and top axes:
-    connect(ui->grafCPU->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafCPU->xAxis2, SLOT(setRange(QCPRange)));
-    connect(ui->grafCPU->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafCPU->yAxis2, SLOT(setRange(QCPRange)));
-
-    connect(ui->grafMEM->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafMEM->xAxis2, SLOT(setRange(QCPRange)));
-    connect(ui->grafMEM->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafMEM->yAxis2, SLOT(setRange(QCPRange)));
 
     connect(ui->grafSupply->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafSupply->xAxis2, SLOT(setRange(QCPRange)));
     connect(ui->grafSupply->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafSupply->yAxis2, SLOT(setRange(QCPRange)));
@@ -87,22 +132,50 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->grafTimeSupply->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafTimeSupply->xAxis2, SLOT(setRange(QCPRange)));
     connect(ui->grafTimeSupply->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafTimeSupply->yAxis2, SLOT(setRange(QCPRange)));
 
-
-    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
-    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
-    dataTimer.start(0); // Interval 0 means to refresh as fast as possible
-
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
+void MainWindow::memoryGraph(){
+    while(true){
+        this->memory.concatenate();
+        emit(signalMemoryGraph());
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    }
 }
 
-void MainWindow::realtimeDataSlot(){
+void MainWindow::CPUGraph(){
+    while(true){
+        this->cpu.calculate();
+        emit(signalCPUGraph());
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    }
+}
+
+void MainWindow::SupplyGraph(){
+    while(true){
+        this->supply.concatenate();
+        emit(signalSupplyGraph());
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    }
+}
+
+void MainWindow::slotMemoryGraph(){
     static QTime time(QTime::currentTime());
-    // calculate two new data points:
-    double key = time.elapsed()/1000.0; // time elapsed since start of demo, in seconds
+    double key = time.elapsed()/1000.0;
+
+    // Adicionar informações para o gráfico da Memória:
+    // graph(0) = Memória
+    // graph(1) = Swap
+    //this->memory.concatenate();
+    ui->grafMEM->graph(0)->addData(key, this->memory.calculateMemory());
+    ui->grafMEM->graph(1)->addData(key, this->memory.calculateSwap());
+
+    ui->grafMEM->xAxis->setRange(key, 60, Qt::AlignRight);
+    ui->grafMEM->replot();
+}
+
+void MainWindow::slotCPUGraph(){
+    static QTime time(QTime::currentTime());
+    double key = time.elapsed()/1000.0;
 
     // Adicionar informação para o gráfico da CPU:
     this->cpu.calculate();
@@ -110,22 +183,16 @@ void MainWindow::realtimeDataSlot(){
          ui->grafCPU->graph(i)->addData(key, this->cpu.getData().at(i));
     }
 
-    // Adicionar informações para o gráfico da Memória:
-    // graph(0) = Memória
-    // graph(1) = Swap
-    this->memory.concatenate();
-    ui->grafMEM->graph(0)->addData(key, this->memory.calculateMemory());
-    ui->grafMEM->graph(1)->addData(key, this->memory.calculateSwap());
-
-    // make key axis range scroll with the data (at a constant range size of 8):
     ui->grafCPU->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafCPU->replot();
 
-    ui->grafMEM->xAxis->setRange(key, 60, Qt::AlignRight);
-    ui->grafMEM->replot();
+}
+
+void MainWindow::slotSupplyGraph(){
+    static QTime time(QTime::currentTime());
+    double key = time.elapsed()/1000.0;
 
     //Graficos de Energia
-    this->supply.concatenate();
     ui->grafSupply->graph(0)->addData(key, this->supply.calculateSupply());
     ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining()); //Está dando erro executar (A janela fecha).
 
@@ -134,5 +201,4 @@ void MainWindow::realtimeDataSlot(){
 
     ui->grafTimeSupply->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafTimeSupply->replot();
-
 }
