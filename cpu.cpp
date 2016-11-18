@@ -46,15 +46,24 @@ void CPU::calculate(){
             prevCpuTime[i-1] = cpuTime[i-1];
 
             column = lines.at(i).split(" ");
-
             cpuIdle[i-1] = column.at(1).toInt() + column.at(2).toInt() + column.at(3).toInt();
-            cpuTime[i-1] = cpuIdle.at(i-1) + column.at(4).toInt() + column.at(5).toInt();
+            cpuTime[i-1] = cpuIdle.at(i-1) + column.at(3).toInt() + column.at(4).toInt() + column.at(5).toInt();
+
+            std::cout <<  "actualIDLE: " << cpuIdle[i-1] << " - prevIDLE: " << prevCpuIdle[i-1] <<"\n";
+            std::cout <<  "actualTIME: " << cpuIdle[i-1] << " - prevTIME: " << prevCpuIdle[i-1] <<"\n";
 
         }
     }
 }
 
 double CPU::getDataCPU(int i){
+//    std::cout << "cpuUsage: " << cpuIdle.at(i) << "\n";
+//    std::cout << "[prev] cpuUsage: " << prevCpuIdle.at(i) << "\n\n";
+//    std::cout << "cpuTotal: " << cpuTime.at(i) << "\n";
+//    std::cout << "[prev] cpuTotal:" << cpuTime.at(i) << "\n";
+
+//    std::cout << "usage - prevUsage: " << cpuIdle.at(i) -  prevCpuIdle.at(i) << "\n";
+
     return ((cpuIdle.at(i) - prevCpuIdle.at(i))*100)/(cpuTime.at(i) - prevCpuTime.at(i) + 1);
 }
 

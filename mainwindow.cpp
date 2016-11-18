@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->firstTime = true;
 
+//    qRegisterMetaType<QVector<double> >("QVector<double>");
     connect(this, SIGNAL(signalMemoryGraph()), SLOT(slotMemoryGraph()));
     connect(this,SIGNAL(signalCPUGraph()),SLOT(slotCPUGraph()));
     connect(this, SIGNAL(signalSupplyGraph()), SLOT(slotSupplyGraph()));
@@ -94,26 +95,20 @@ void MainWindow::configCPUGraph(){
 }
 
 void MainWindow::configSupplyGraph(){
-    //GRAFICO DE CARGA DA BATERIA
     ui->grafSupply->addGraph(); // blue line
     ui->grafSupply->graph(0)->setPen(QPen(QColor(40, 110, 255)));
     ui->grafSupply->graph(0)->setName("Carga(%)");
 
-    //GRÁFICO DE TEMPRO PARA DESCARREGAR
-    //GRAFICO DE CARGA DA BATERIA
     ui->grafTimeSupply->addGraph(); // blue line
     ui->grafTimeSupply->graph(0)->setPen(QPen(QColor(255, 110, 40)));
     ui->grafTimeSupply->graph(0)->setName("Tempo de Descarga");
 
-    // Adicionar as legendas de ambos os gráficos:
     ui->grafSupply->legend->setVisible(true);
     ui->grafTimeSupply->legend->setVisible(true);
 
-    // Gerenciamento do tempo dos gráficos (CPU e Mem) e dos tamanhos:
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
     timeTicker->setTimeFormat("%h:%m:%s");
 
-    // Gerenciamento do tempo dos gráficos de Carga e Tempo de Descarga e dos tamanhos:
     ui->grafSupply->xAxis->setTicker(timeTicker);
     ui->grafSupply->axisRect()->setupFullAxesBox();
     ui->grafSupply->yAxis->setRange(-0.3, 100.3);
@@ -121,9 +116,6 @@ void MainWindow::configSupplyGraph(){
     ui->grafTimeSupply->xAxis->setTicker(timeTicker);
     ui->grafTimeSupply->axisRect()->setupFullAxesBox();
     ui->grafTimeSupply->yAxis->setRange(-0.1, 8.1);
-
-
-    // make left and bottom axes transfer their ranges to right and top axes:
 
     connect(ui->grafSupply->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafSupply->xAxis2, SLOT(setRange(QCPRange)));
     connect(ui->grafSupply->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafSupply->yAxis2, SLOT(setRange(QCPRange)));
@@ -161,10 +153,6 @@ void MainWindow::slotMemoryGraph(){
     static QTime time(QTime::currentTime());
     double key = time.elapsed()/1000.0;
 
-    // Adicionar informações para o gráfico da Memória:
-    // graph(0) = Memória
-    // graph(1) = Swap
-    //this->memory.concatenate();
     ui->grafMEM->graph(0)->addData(key, this->memory.calculateMemory());
     ui->grafMEM->graph(1)->addData(key, this->memory.calculateSwap());
 
@@ -175,9 +163,6 @@ void MainWindow::slotMemoryGraph(){
 void MainWindow::slotCPUGraph(){
     static QTime time(QTime::currentTime());
     double key = time.elapsed()/1000.0;
-
-    // Adicionar informação para o gráfico da CPU:
-    this->cpu.calculate();
 
     for(int i = 0; i < 4; i++){
          ui->grafCPU->graph(i)->addData(key, cpu.getDataCPU(i));
@@ -192,9 +177,8 @@ void MainWindow::slotSupplyGraph(){
     static QTime time(QTime::currentTime());
     double key = time.elapsed()/1000.0;
 
-    //Graficos de Energia
     ui->grafSupply->graph(0)->addData(key, this->supply.calculateSupply());
-    ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining()); //Está dando erro executar (A janela fecha).
+    ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining());
 
     ui->grafSupply->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafSupply->replot();
