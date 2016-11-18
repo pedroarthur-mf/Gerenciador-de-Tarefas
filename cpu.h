@@ -15,14 +15,12 @@ private:
     QVector<long> cpuIdle;
     QVector<long> prevCpuTime;
     QVector<long> prevCpuIdle;
-//    QVector<long double> dataCpus;
 
 public:
     CPU();
     int getNumCPUs();
     void calculate();
     void concatenate();
-//    QVector<long double> getData();
     double getDataCPU(int i);
 };
 

@@ -40,7 +40,6 @@ void CPU::calculate(){
     if(openFile()){
         QStringList lines = this->content.split("\n");
         QStringList column;
-//        dataCpus.clear();
         for(int i = 1; i < lines.size() - 1; i++){
             if(i > numCPUs) break;
             prevCpuIdle[i-1] = cpuIdle[i-1];
@@ -49,7 +48,7 @@ void CPU::calculate(){
             column = lines.at(i).split(" ");
 
             cpuIdle[i-1] = column.at(1).toInt() + column.at(2).toInt() + column.at(3).toInt();
-            cpuTime[i-1] = cpuIdle.at(i-1) + column.at(4).toInt();
+            cpuTime[i-1] = cpuIdle.at(i-1) + column.at(4).toInt() + column.at(5).toInt();
 
         }
     }
@@ -63,6 +62,3 @@ int CPU::getNumCPUs(){
     return this->numCPUs;
 }
 
-//QVector<long double> CPU::getData(){
-//    return this->dataCpus;
-//}
