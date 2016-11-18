@@ -58,7 +58,7 @@ void MainWindow::configMemoryGraph(){
 
     ui->grafMEM->xAxis->setTicker(timeTicker);
     ui->grafMEM->axisRect()->setupFullAxesBox();
-    ui->grafMEM->yAxis->setRange(-0.3, 100.5);
+    ui->grafMEM->yAxis->setRange(-0.3, 100.3);
 
     connect(ui->grafMEM->xAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafMEM->xAxis2, SLOT(setRange(QCPRange)));
     connect(ui->grafMEM->yAxis, SIGNAL(rangeChanged(QCPRange)), ui->grafMEM->yAxis2, SLOT(setRange(QCPRange)));
@@ -67,18 +67,18 @@ void MainWindow::configMemoryGraph(){
 
 void MainWindow::configCPUGraph(){
     QVector<QColor> colors;
+    colors.append(QColor(255, 140, 0));
     colors.append(Qt::red);
+    colors.append(Qt::green);
     colors.append(Qt::blue);
     colors.append(Qt::black);
-    colors.append(Qt::green);
     colors.append(Qt::yellow);
-    colors.append(Qt::magenta);
 
     QString name = "CPU";
     for(int i = 0; i < this->cpu.getNumCPUs(); i++){
         ui->grafCPU->addGraph();
         ui->grafCPU->graph(i)->setPen(QPen(colors.at(i)));
-        ui->grafCPU->graph(i)->setName(name + QString::number(i));
+        ui->grafCPU->graph(i)->setName(name + QString::number(i+1));
     }
 
     ui->grafCPU->legend->setVisible(true);
