@@ -129,7 +129,7 @@ void MainWindow::memoryGraph(){
     while(true){
         this->memory.concatenate();
         emit(signalMemoryGraph());
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 }
 
@@ -137,7 +137,7 @@ void MainWindow::CPUGraph(){
     while(true){
         this->cpu.calculate();
         emit(signalCPUGraph());
-        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        std::this_thread::sleep_for(std::chrono::milliseconds(350));
     }
 }
 

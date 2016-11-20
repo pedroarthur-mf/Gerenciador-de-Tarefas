@@ -31,7 +31,7 @@ void Memory::concatenate(){
 
 double Memory::calculateMemory(){
     int total = this->infos.value("MemTotal");
-    int used = this->infos.value("MemFree");
+    int used = this->infos.value("MemAvailable");
 
     return ((total - used)*100.0)/total;
 
