@@ -9,6 +9,7 @@
 #include "memory.h"
 #include "cpu.h"
 #include "supply.h"
+#include "tojson.h"
 
 namespace Ui {
 class MainWindow;

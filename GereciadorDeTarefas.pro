@@ -17,12 +17,16 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     memory.cpp \
     cpu.cpp \
-    supply.cpp
+    supply.cpp \
+    process.cpp \
+    tojson.cpp
 
 HEADERS  += mainwindow.h \
     qcustomplot.h \
     memory.h \
     cpu.h \
-    supply.h
+    supply.h \
+    process.h \
+    tojson.h
 
 FORMS    += mainwindow.ui

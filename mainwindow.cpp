@@ -8,6 +8,13 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->firstTime = true;
 
+    toJson j;
+    j.generateJson();
+//    QVector<Process> a = j.getData();
+//    for(int i = 0; i < a.size(); i++){
+//        std::cout << a.at(i).getName() << " " << a.at(i).getPid() << " " << a.at(i).getPpid() << "\n";
+//    }
+
 //    qRegisterMetaType<QVector<double> >("QVector<double>");
     connect(this, SIGNAL(signalMemoryGraph()), SLOT(slotMemoryGraph()));
     connect(this,SIGNAL(signalCPUGraph()),SLOT(slotCPUGraph()));
@@ -19,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     run();
 
-//    // GRÁFICO DAS BOLHAS:
-//    ui->widget_3->load(QUrl::fromLocalFile("../index.html"));
+    // GRÁFICO DAS BOLHAS:
+    ui->widget_3->load(QUrl::fromLocalFile("/home/yurialessandro/Documentos/C++/Gerenciador-de-Tarefas/index.html"));
 
 //    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
 //    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
