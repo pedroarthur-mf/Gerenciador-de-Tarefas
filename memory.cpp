@@ -37,6 +37,10 @@ double Memory::calculateMemory(){
 
 }
 
+int Memory::getTotal(){
+    return this->infos.value("MemTotal");
+}
+
 int Memory::calculateSwap(){
     int total = this->infos.value("SwapTotal");
     int used = this->infos.value("SwapFree");

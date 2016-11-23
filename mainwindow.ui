@@ -21,6 +21,9 @@
        <number>0</number>
       </property>
       <widget class="QWidget" name="tab_3">
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
        <attribute name="title">
         <string>Processos</string>
        </attribute>

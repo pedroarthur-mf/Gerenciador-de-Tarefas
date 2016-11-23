@@ -10,7 +10,7 @@
 
 #include "process.h"
 
-#define PATH "/home/yurialessandro/Documentos/C++/Gerenciador-de-Tarefas/"
+#define PATH "/home/pedroarthur-mf/Gerenciador-de-Tarefas/"
 
 class toJson
 {

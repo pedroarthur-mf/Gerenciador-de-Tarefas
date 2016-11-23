@@ -12,6 +12,7 @@ public:
     void concatenate();
     double calculateMemory();
     int calculateSwap();
+    int getTotal();
 
 private:
     QString content;

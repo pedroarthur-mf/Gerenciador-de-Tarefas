@@ -8,6 +8,7 @@ toJson::toJson()
 }
 
 void toJson::getProcessData(int comp){
+    process.clear();
     system("ps xao pid,ppid,%mem,%cpu,comm > datafile.txt");
 
     std::ifstream dataFile("datafile.txt");
@@ -36,7 +37,7 @@ void toJson::getProcessData(int comp){
 
         switch (comp) {
         case 0:
-            temp.compare = temp.getMemUsage() * 10;
+            temp.compare = (temp.getMemUsage() * 100)/500;
             break;
         case 1:
             temp.compare = temp.getCpuUsage() * 10;
@@ -50,44 +51,44 @@ void toJson::getProcessData(int comp){
     dataFile.close();
 }
 
- void toJson::generateJson(int comp){
+void toJson::generateJson(int comp){
     this->getProcessData(comp);
 
-     std::ostringstream oss;
+    std::ostringstream oss;
     std::ofstream jsonFile(std::string(PATH) + "test.json", std::ios::trunc);
 
     // ARQUIVO:
-    oss << "{\"name\": \"processos\", \"children\": [";
+    oss << "{\n \"name\": \"processos\",\n \"children\":\n [\n";
 
     int i = 0;
     for(auto e : process){
         // FAMÍLIA:
         if(i != 0){
-            oss << ",";
+            oss << ",\n";
         }
-        oss << "{\"name\": \"default " << i << "\", \"children\": [";
+        oss << "  {\n    \"name\": \"default " << i << "\",\n    \"children\":\n    [\n";
 
         int j = 0;
         for(auto p : e.second){
             // FILHOS:
             if(j != 0){
-                oss << ",";
+                oss << ",\n";
             }
-            oss << "{\"name\": \"" << p.getName() << "\", \"size\": " << p.compare << ", \"pid\": " << p.getPid() <<  "}";
+            oss << "      {\"name\": \"" << p.getName() << "\", \"size\": " << p.compare << ", \"pid\": " << p.getPid() <<  "}";
             j++;
         }
-        oss << "]}";
+        oss << "\n    ]\n  }";
         i++;
     }
-    oss << "]}";
+    oss << "\n ]\n}";
 
     std::string json_final = oss.str();
     jsonFile << json_final << "\n";
     jsonFile.close();
- }
+}
 
- void toJson::update(int comp){
-    process.clear();
+void toJson::update(int comp){
+    //process.clear();
     generateJson(comp);
- }
+}
 

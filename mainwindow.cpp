@@ -126,7 +126,7 @@ void MainWindow::configSupplyGraph(){
 }
 
 void MainWindow::configProcGraph(){
-    ui->widget_3->load(QUrl::fromLocalFile("/home/yurialessandro/Documentos/C++/Gerenciador-de-Tarefas/index.html"));
+    ui->widget_3->load(QUrl::fromLocalFile("/home/pedroarthur-mf/Gerenciador-de-Tarefas/index.html"));
 }
 
 void MainWindow::memoryGraph(){
