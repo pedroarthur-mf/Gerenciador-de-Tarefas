@@ -25,17 +25,24 @@ public:
     void configMemoryGraph();
     void configCPUGraph();
     void configSupplyGraph();
+    void configProcGraph();
     void run();
 
 signals:
     void signalMemoryGraph();
     void signalCPUGraph();
     void signalSupplyGraph();
+    void signalProcGraph();
 
 private slots:
     void slotMemoryGraph();
     void slotCPUGraph();
     void slotSupplyGraph();
+    void slotProcGraph();
+
+    void on_updateButton_clicked();
+
+    void on_killButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -45,14 +52,17 @@ private:
     std::thread thMemory;
     std::thread thCPU;
     std::thread thSupply;
+    std::thread thProc;
 
     Memory memory;
     CPU cpu;
     Supply supply;
+    toJson json;
 
     void memoryGraph();
     void CPUGraph();
     void SupplyGraph();
+    void procGraph();
 };
 
 #endif // MAINWINDOW_H

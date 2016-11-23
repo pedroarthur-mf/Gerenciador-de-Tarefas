@@ -8,26 +8,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     this->firstTime = true;
 
-    toJson j;
-    j.generateJson();
-//    QVector<Process> a = j.getData();
-//    for(int i = 0; i < a.size(); i++){
-//        std::cout << a.at(i).getName() << " " << a.at(i).getPid() << " " << a.at(i).getPpid() << "\n";
-//    }
-
 //    qRegisterMetaType<QVector<double> >("QVector<double>");
     connect(this, SIGNAL(signalMemoryGraph()), SLOT(slotMemoryGraph()));
     connect(this,SIGNAL(signalCPUGraph()),SLOT(slotCPUGraph()));
     connect(this, SIGNAL(signalSupplyGraph()), SLOT(slotSupplyGraph()));
+    connect(this, SIGNAL(signalProcGraph()), SLOT(slotProcGraph()));
 
     configMemoryGraph();
     configCPUGraph();
     configSupplyGraph();
+    configProcGraph();
 
     run();
-
-    // GRÁFICO DAS BOLHAS:
-    ui->widget_3->load(QUrl::fromLocalFile("/home/yurialessandro/Documentos/C++/Gerenciador-de-Tarefas/index.html"));
 
 //    // setup a timer that repeatedly calls MainWindow::realtimeDataSlot:
 //    connect(&dataTimer, SIGNAL(timeout()), this, SLOT(realtimeDataSlot()));
@@ -45,6 +37,7 @@ void MainWindow::run(){
         this->thMemory = std::thread(&MainWindow::memoryGraph, this);
         this->thCPU = std::thread(&MainWindow::CPUGraph, this);
         this->thSupply = std::thread(&MainWindow::SupplyGraph, this);
+        this->thProc = std::thread(&MainWindow::procGraph, this);
         this->firstTime = false;
     }
 }
@@ -132,6 +125,10 @@ void MainWindow::configSupplyGraph(){
 
 }
 
+void MainWindow::configProcGraph(){
+    ui->widget_3->load(QUrl::fromLocalFile("/home/yurialessandro/Documentos/C++/Gerenciador-de-Tarefas/index.html"));
+}
+
 void MainWindow::memoryGraph(){
     while(true){
         this->memory.concatenate();
@@ -152,6 +149,13 @@ void MainWindow::SupplyGraph(){
     while(true){
         this->supply.concatenate();
         emit(signalSupplyGraph());
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    }
+}
+
+void MainWindow::procGraph(){
+    while(true){
+        emit(signalProcGraph());
         std::this_thread::sleep_for(std::chrono::milliseconds(250));
     }
 }
@@ -192,4 +196,30 @@ void MainWindow::slotSupplyGraph(){
 
     ui->grafTimeSupply->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafTimeSupply->replot();
+}
+
+void MainWindow::slotProcGraph(){
+    int comp = ui->comboBox->currentIndex();
+    this->json.generateJson(comp);
+}
+
+void MainWindow::on_updateButton_clicked()
+{
+    int comp = ui->comboBox->currentIndex();
+    json.update(comp);
+    ui->widget_3->repaint();
+    ui->widget_3->reload();
+    ui->widget_3->update();
+}
+
+void MainWindow::on_killButton_clicked()
+{
+    int pid = ui->txtPID->text().toInt();
+
+    std::string tm = "kill -9 " + std::to_string(pid);
+    if(pid != 0) system(tm.c_str());
+
+    ui->txtPID->setText(" ");
+
+    this->on_updateButton_clicked();
 }

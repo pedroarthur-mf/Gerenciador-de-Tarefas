@@ -88,6 +88,21 @@
               <string>Filtro por Memória</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Filtro por CPU</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Filtro por Thread</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Outro filtro</string>
+             </property>
+            </item>
            </widget>
           </item>
           <item>

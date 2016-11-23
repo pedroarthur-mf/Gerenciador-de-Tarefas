@@ -2,22 +2,26 @@
 #define TOJSON_H
 
 #include <iostream>
-#include <QFile>
-#include <QVector>
+#include <map>
+#include <vector>
+#include <QString>
 #include <fstream>
 #include <sstream>
+
 #include "process.h"
+
+#define PATH "/home/yurialessandro/Documentos/C++/Gerenciador-de-Tarefas/"
 
 class toJson
 {
 private:
     QString content;
-    QVector<Process> processos;
-    void getProcessData();
+    std::map<int, std::vector<Process>> process;
+    void getProcessData(int);
 public:
     toJson();
-    QVector<Process> getData();
-    void generateJson();
+    void generateJson(int);
+    void update(int);
 };
 
 #endif // TOJSON_H
