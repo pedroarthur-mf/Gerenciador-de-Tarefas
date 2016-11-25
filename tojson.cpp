@@ -37,10 +37,10 @@ void toJson::getProcessData(int comp){
 
         switch (comp) {
         case 0:
-            temp.compare = (temp.getMemUsage() * 100)/500;
+            temp.compare = ((temp.getMemUsage()+0.01) * 100)/500;
             break;
         case 1:
-            temp.compare = temp.getCpuUsage() * 10;
+            temp.compare = (temp.getCpuUsage()+0.01) * 10;
             break;
         default:
             temp.compare = 100;
