@@ -1,0 +1,386 @@
+{
+ "name": "processos",
+ "children":
+ [
+  {
+    "name": "default 0",
+    "children":
+    [
+      {"name": "systemd", "size": 0.21, "pid": 1},
+      {"name": "kthreadd", "size": 0.01, "pid": 2}
+    ]
+  },
+  {
+    "name": "default 1",
+    "children":
+    [
+      {"name": "systemd-journal", "size": 0.01, "pid": 263},
+      {"name": "systemd-udevd", "size": 0.01, "pid": 287},
+      {"name": "systemd-timesyn", "size": 0.01, "pid": 780},
+      {"name": "avahi-daemon", "size": 0.01, "pid": 803},
+      {"name": "cron", "size": 0.01, "pid": 816},
+      {"name": "dbus-daemon", "size": 0.01, "pid": 817},
+      {"name": "cups-browsed", "size": 0.01, "pid": 826},
+      {"name": "thermald", "size": 0.01, "pid": 830},
+      {"name": "rsyslogd", "size": 0.01, "pid": 831},
+      {"name": "accounts-daemon", "size": 0.01, "pid": 842},
+      {"name": "bluetoothd", "size": 0.01, "pid": 846},
+      {"name": "ModemManager", "size": 0.01, "pid": 849},
+      {"name": "NetworkManager", "size": 0.01, "pid": 853},
+      {"name": "whoopsie", "size": 0.01, "pid": 855},
+      {"name": "systemd-logind", "size": 0.01, "pid": 858},
+      {"name": "acpid", "size": 0.11, "pid": 864},
+      {"name": "snapd", "size": 0.01, "pid": 866},
+      {"name": "irqbalance", "size": 0.01, "pid": 898},
+      {"name": "polkitd", "size": 0.01, "pid": 918},
+      {"name": "lightdm", "size": 0.01, "pid": 940},
+      {"name": "wpa_supplicant", "size": 0.01, "pid": 968},
+      {"name": "agetty", "size": 0.01, "pid": 981},
+      {"name": "rtkit-daemon", "size": 0.01, "pid": 1205},
+      {"name": "upowerd", "size": 0.01, "pid": 1298},
+      {"name": "colord", "size": 0.01, "pid": 1341},
+      {"name": "systemd", "size": 0.01, "pid": 1359},
+      {"name": "gnome-keyring-d", "size": 0.01, "pid": 1367},
+      {"name": "udisksd", "size": 0.01, "pid": 1774},
+      {"name": "fwupd", "size": 0.11, "pid": 1822}
+    ]
+  },
+  {
+    "name": "default 2",
+    "children":
+    [
+      {"name": "ksoftirqd/0", "size": 0.01, "pid": 3},
+      {"name": "kworker/0:0H", "size": 0.01, "pid": 5},
+      {"name": "rcu_sched", "size": 0.01, "pid": 7},
+      {"name": "rcu_bh", "size": 0.01, "pid": 8},
+      {"name": "migration/0", "size": 0.01, "pid": 9},
+      {"name": "watchdog/0", "size": 0.01, "pid": 10},
+      {"name": "watchdog/1", "size": 0.01, "pid": 11},
+      {"name": "migration/1", "size": 0.01, "pid": 12},
+      {"name": "ksoftirqd/1", "size": 0.01, "pid": 13},
+      {"name": "kworker/1:0H", "size": 0.01, "pid": 15},
+      {"name": "watchdog/2", "size": 0.01, "pid": 16},
+      {"name": "migration/2", "size": 0.01, "pid": 17},
+      {"name": "ksoftirqd/2", "size": 0.01, "pid": 18},
+      {"name": "kworker/2:0H", "size": 0.01, "pid": 20},
+      {"name": "watchdog/3", "size": 0.01, "pid": 21},
+      {"name": "migration/3", "size": 0.01, "pid": 22},
+      {"name": "ksoftirqd/3", "size": 0.01, "pid": 23},
+      {"name": "kworker/3:0H", "size": 0.01, "pid": 25},
+      {"name": "kdevtmpfs", "size": 0.01, "pid": 26},
+      {"name": "netns", "size": 0.01, "pid": 27},
+      {"name": "perf", "size": 0.01, "pid": 28},
+      {"name": "khungtaskd", "size": 0.01, "pid": 29},
+      {"name": "writeback", "size": 0.01, "pid": 30},
+      {"name": "ksmd", "size": 0.01, "pid": 31},
+      {"name": "khugepaged", "size": 0.01, "pid": 32},
+      {"name": "crypto", "size": 0.01, "pid": 33},
+      {"name": "kintegrityd", "size": 0.01, "pid": 34},
+      {"name": "bioset", "size": 0.01, "pid": 35},
+      {"name": "kblockd", "size": 0.01, "pid": 36},
+      {"name": "ata_sff", "size": 0.01, "pid": 37},
+      {"name": "md", "size": 0.01, "pid": 38},
+      {"name": "devfreq_wq", "size": 0.01, "pid": 39},
+      {"name": "kworker/u16:1", "size": 0.01, "pid": 40},
+      {"name": "kworker/0:1", "size": 0.01, "pid": 41},
+      {"name": "kswapd0", "size": 0.01, "pid": 43},
+      {"name": "vmstat", "size": 0.01, "pid": 44},
+      {"name": "fsnotify_mark", "size": 0.01, "pid": 45},
+      {"name": "ecryptfs-kthrea", "size": 0.01, "pid": 46},
+      {"name": "kthrotld", "size": 0.01, "pid": 62},
+      {"name": "acpi_thermal_pm", "size": 0.01, "pid": 63},
+      {"name": "kworker/1:1", "size": 0.01, "pid": 65},
+      {"name": "bioset", "size": 0.01, "pid": 66},
+      {"name": "bioset", "size": 0.01, "pid": 67},
+      {"name": "bioset", "size": 0.01, "pid": 68},
+      {"name": "bioset", "size": 0.01, "pid": 69},
+      {"name": "bioset", "size": 0.01, "pid": 70},
+      {"name": "bioset", "size": 0.01, "pid": 71},
+      {"name": "bioset", "size": 0.01, "pid": 72},
+      {"name": "bioset", "size": 0.01, "pid": 73},
+      {"name": "bioset", "size": 0.01, "pid": 74},
+      {"name": "bioset", "size": 0.01, "pid": 75},
+      {"name": "bioset", "size": 0.01, "pid": 76},
+      {"name": "bioset", "size": 0.01, "pid": 77},
+      {"name": "bioset", "size": 0.01, "pid": 78},
+      {"name": "bioset", "size": 0.01, "pid": 79},
+      {"name": "bioset", "size": 0.01, "pid": 80},
+      {"name": "bioset", "size": 0.01, "pid": 81},
+      {"name": "bioset", "size": 0.01, "pid": 82},
+      {"name": "bioset", "size": 0.01, "pid": 83},
+      {"name": "bioset", "size": 0.01, "pid": 84},
+      {"name": "bioset", "size": 0.01, "pid": 85},
+      {"name": "bioset", "size": 0.01, "pid": 86},
+      {"name": "bioset", "size": 0.01, "pid": 87},
+      {"name": "bioset", "size": 0.01, "pid": 88},
+      {"name": "bioset", "size": 0.01, "pid": 89},
+      {"name": "ipv6_addrconf", "size": 0.01, "pid": 93},
+      {"name": "deferwq", "size": 0.01, "pid": 106},
+      {"name": "charger_manager", "size": 0.01, "pid": 107},
+      {"name": "kworker/2:1", "size": 0.01, "pid": 119},
+      {"name": "kworker/3:1", "size": 0.01, "pid": 148},
+      {"name": "kpsmoused", "size": 0.01, "pid": 149},
+      {"name": "scsi_eh_0", "size": 0.01, "pid": 150},
+      {"name": "scsi_tmf_0", "size": 0.01, "pid": 151},
+      {"name": "scsi_eh_1", "size": 0.01, "pid": 152},
+      {"name": "scsi_tmf_1", "size": 0.01, "pid": 153},
+      {"name": "scsi_eh_2", "size": 0.01, "pid": 154},
+      {"name": "scsi_tmf_2", "size": 0.01, "pid": 155},
+      {"name": "kworker/u16:3", "size": 0.01, "pid": 156},
+      {"name": "kworker/u16:4", "size": 0.01, "pid": 157},
+      {"name": "kworker/0:2", "size": 0.01, "pid": 158},
+      {"name": "kfd_process_wq", "size": 0.01, "pid": 160},
+      {"name": "kworker/3:2", "size": 0.01, "pid": 161},
+      {"name": "bioset", "size": 0.01, "pid": 165},
+      {"name": "ttm_swap", "size": 0.01, "pid": 166},
+      {"name": "gfx", "size": 0.01, "pid": 167},
+      {"name": "comp", "size": 0.01, "pid": 169},
+      {"name": "comp", "size": 0.01, "pid": 170},
+      {"name": "comp", "size": 0.01, "pid": 171},
+      {"name": "comp", "size": 0.01, "pid": 172},
+      {"name": "comp", "size": 0.01, "pid": 173},
+      {"name": "comp", "size": 0.01, "pid": 174},
+      {"name": "comp", "size": 0.01, "pid": 175},
+      {"name": "comp", "size": 0.01, "pid": 176},
+      {"name": "sdma0", "size": 0.01, "pid": 177},
+      {"name": "sdma1", "size": 0.01, "pid": 178},
+      {"name": "kworker/2:2", "size": 0.01, "pid": 179},
+      {"name": "kworker/2:1H", "size": 0.01, "pid": 208},
+      {"name": "kworker/0:1H", "size": 0.01, "pid": 211},
+      {"name": "jbd2/sda9-8", "size": 0.01, "pid": 217},
+      {"name": "ext4-rsv-conver", "size": 0.01, "pid": 218},
+      {"name": "kauditd", "size": 0.01, "pid": 244},
+      {"name": "kworker/3:1H", "size": 0.01, "pid": 260},
+      {"name": "kworker/1:2", "size": 0.01, "pid": 300},
+      {"name": "irq/39-DLL0641:", "size": 0.01, "pid": 366},
+      {"name": "irq/51-mei_me", "size": 0.01, "pid": 386},
+      {"name": "cfg80211", "size": 0.01, "pid": 410},
+      {"name": "irq/54-iwlwifi", "size": 0.01, "pid": 416},
+      {"name": "kworker/u17:0", "size": 0.01, "pid": 417},
+      {"name": "hci0", "size": 0.01, "pid": 418},
+      {"name": "hci0", "size": 0.01, "pid": 419},
+      {"name": "kworker/u17:2", "size": 0.01, "pid": 421},
+      {"name": "kworker/1:1H", "size": 0.01, "pid": 422},
+      {"name": "kvm-irqfd-clean", "size": 0.01, "pid": 526},
+      {"name": "kmemstick", "size": 0.01, "pid": 824},
+      {"name": "rtsx_usb_ms_1", "size": 0.01, "pid": 825},
+      {"name": "krfcommd", "size": 0.01, "pid": 1310},
+      {"name": "kworker/3:0", "size": 0.01, "pid": 3806},
+      {"name": "kworker/1:0", "size": 0.01, "pid": 3819},
+      {"name": "kworker/2:0", "size": 0.01, "pid": 4093},
+      {"name": "kworker/2:3", "size": 0.01, "pid": 4255},
+      {"name": "kworker/0:0", "size": 0.01, "pid": 5445},
+      {"name": "kworker/u16:0", "size": 0.01, "pid": 5742}
+    ]
+  },
+  {
+    "name": "default 3",
+    "children":
+    [
+      {"name": "avahi-daemon", "size": 0.01, "pid": 823}
+    ]
+  },
+  {
+    "name": "default 4",
+    "children":
+    [
+      {"name": "dhclient", "size": 0.01, "pid": 1064},
+      {"name": "dnsmasq", "size": 0.01, "pid": 1082}
+    ]
+  },
+  {
+    "name": "default 5",
+    "children":
+    [
+      {"name": "Xorg", "size": 3.21, "pid": 977},
+      {"name": "lightdm", "size": 0.01, "pid": 1150}
+    ]
+  },
+  {
+    "name": "default 6",
+    "children":
+    [
+      {"name": "upstart", "size": 0.01, "pid": 1369}
+    ]
+  },
+  {
+    "name": "default 7",
+    "children":
+    [
+      {"name": "(sd-pam)", "size": 0.01, "pid": 1361}
+    ]
+  },
+  {
+    "name": "default 8",
+    "children":
+    [
+      {"name": "upstart-udev-br", "size": 0.01, "pid": 1442},
+      {"name": "dbus-daemon", "size": 0.01, "pid": 1456},
+      {"name": "window-stack-br", "size": 0.01, "pid": 1468},
+      {"name": "upstart-dbus-br", "size": 0.01, "pid": 1498},
+      {"name": "upstart-dbus-br", "size": 0.01, "pid": 1506},
+      {"name": "upstart-file-br", "size": 0.01, "pid": 1508},
+      {"name": "ibus-daemon", "size": 0.01, "pid": 1510},
+      {"name": "gpg-agent", "size": 0.01, "pid": 1517},
+      {"name": "gvfsd", "size": 0.01, "pid": 1527},
+      {"name": "gvfsd-fuse", "size": 0.01, "pid": 1533},
+      {"name": "ibus-x11", "size": 0.01, "pid": 1549},
+      {"name": "bamfdaemon", "size": 0.01, "pid": 1554},
+      {"name": "hud-service", "size": 0.21, "pid": 1583},
+      {"name": "unity-settings-", "size": 0.01, "pid": 1585},
+      {"name": "at-spi-bus-laun", "size": 0.01, "pid": 1593},
+      {"name": "gnome-session-b", "size": 0.01, "pid": 1594},
+      {"name": "unity-panel-ser", "size": 0.11, "pid": 1597},
+      {"name": "at-spi2-registr", "size": 0.01, "pid": 1614},
+      {"name": "dconf-service", "size": 0.01, "pid": 1628},
+      {"name": "indicator-messa", "size": 0.01, "pid": 1643},
+      {"name": "indicator-bluet", "size": 0.01, "pid": 1647},
+      {"name": "indicator-power", "size": 0.01, "pid": 1651},
+      {"name": "indicator-datet", "size": 0.01, "pid": 1652},
+      {"name": "indicator-keybo", "size": 0.01, "pid": 1653},
+      {"name": "indicator-sound", "size": 0.01, "pid": 1654},
+      {"name": "indicator-print", "size": 0.01, "pid": 1655},
+      {"name": "indicator-sessi", "size": 0.01, "pid": 1659},
+      {"name": "indicator-appli", "size": 0.01, "pid": 1662},
+      {"name": "pulseaudio", "size": 0.01, "pid": 1698},
+      {"name": "evolution-sourc", "size": 0.01, "pid": 1705},
+      {"name": "compiz", "size": 1.81, "pid": 1735},
+      {"name": "gvfs-udisks2-vo", "size": 0.01, "pid": 1769},
+      {"name": "evolution-calen", "size": 0.01, "pid": 1785},
+      {"name": "gvfs-goa-volume", "size": 0.01, "pid": 1795},
+      {"name": "gvfs-gphoto2-vo", "size": 0.01, "pid": 1800},
+      {"name": "gvfs-mtp-volume", "size": 0.01, "pid": 1808},
+      {"name": "gvfs-afc-volume", "size": 0.01, "pid": 1814},
+      {"name": "gvfsd-trash", "size": 0.01, "pid": 1840},
+      {"name": "gconfd-2", "size": 0.01, "pid": 1845},
+      {"name": "evolution-addre", "size": 0.01, "pid": 1856},
+      {"name": "gvfsd-metadata", "size": 0.01, "pid": 1900},
+      {"name": "unity-scope-hom", "size": 0.01, "pid": 1948},
+      {"name": "unity-scope-loa", "size": 0.01, "pid": 1958},
+      {"name": "unity-files-dae", "size": 0.01, "pid": 1960},
+      {"name": "sh", "size": 0.01, "pid": 1969},
+      {"name": "zeitgeist-fts", "size": 0.01, "pid": 1981},
+      {"name": "zeitgeist-datah", "size": 0.01, "pid": 1985},
+      {"name": "qtcreator", "size": 0.71, "pid": 2015},
+      {"name": "gnome-terminal-", "size": 0.01, "pid": 2123},
+      {"name": "gnome-system-mo", "size": 2.81, "pid": 4046}
+    ]
+  },
+  {
+    "name": "default 9",
+    "children":
+    [
+      {"name": "ibus-dconf", "size": 0.01, "pid": 1539},
+      {"name": "ibus-ui-gtk3", "size": 0.01, "pid": 1547},
+      {"name": "ibus-engine-sim", "size": 0.01, "pid": 1567}
+    ]
+  },
+  {
+    "name": "default 10",
+    "children":
+    [
+      {"name": "syndaemon", "size": 0.01, "pid": 1706}
+    ]
+  },
+  {
+    "name": "default 11",
+    "children":
+    [
+      {"name": "dbus-daemon", "size": 0.01, "pid": 1606}
+    ]
+  },
+  {
+    "name": "default 12",
+    "children":
+    [
+      {"name": "unity-fallback-", "size": 0.01, "pid": 1746},
+      {"name": "gnome-software", "size": 0.31, "pid": 1747},
+      {"name": "nm-applet", "size": 0.01, "pid": 1756},
+      {"name": "polkit-gnome-au", "size": 0.01, "pid": 1757},
+      {"name": "nautilus", "size": 0.11, "pid": 1763},
+      {"name": "fluxgui", "size": 0.01, "pid": 1764},
+      {"name": "update-notifier", "size": 0.01, "pid": 2077},
+      {"name": "deja-dup-monito", "size": 0.01, "pid": 2380}
+    ]
+  },
+  {
+    "name": "default 13",
+    "children":
+    [
+      {"name": "python", "size": 0.01, "pid": 1809}
+    ]
+  },
+  {
+    "name": "default 14",
+    "children":
+    [
+      {"name": "evolution-calen", "size": 0.01, "pid": 1835},
+      {"name": "evolution-calen", "size": 0.01, "pid": 1859}
+    ]
+  },
+  {
+    "name": "default 15",
+    "children":
+    [
+      {"name": "xflux", "size": 0.01, "pid": 1892}
+    ]
+  },
+  {
+    "name": "default 16",
+    "children":
+    [
+      {"name": "evolution-addre", "size": 0.01, "pid": 1867}
+    ]
+  },
+  {
+    "name": "default 17",
+    "children":
+    [
+      {"name": "zeitgeist-daemo", "size": 0.01, "pid": 1973}
+    ]
+  },
+  {
+    "name": "default 18",
+    "children":
+    [
+      {"name": "qtcreator_proce", "size": 0.01, "pid": 2130}
+    ]
+  },
+  {
+    "name": "default 19",
+    "children":
+    [
+      {"name": "MeuProjeto", "size": 4.91, "pid": 2131}
+    ]
+  },
+  {
+    "name": "default 20",
+    "children":
+    [
+      {"name": "QtWebEngineProc", "size": 0.01, "pid": 2138},
+      {"name": "sh", "size": 0.01, "pid": 6672}
+    ]
+  },
+  {
+    "name": "default 21",
+    "children":
+    [
+      {"name": "QtWebEngineProc", "size": 0.01, "pid": 2140}
+    ]
+  },
+  {
+    "name": "default 22",
+    "children":
+    [
+      {"name": "QtWebEngineProc", "size": 0.61, "pid": 2160}
+    ]
+  },
+  {
+    "name": "default 23",
+    "children":
+    [
+      {"name": "ps", "size": 0.01, "pid": 6673}
+    ]
+  }
+ ]
+}

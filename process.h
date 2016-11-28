@@ -11,6 +11,7 @@ private:
     int ppid;
     double memUsage;
     double cpuUsage;
+    double thUsage;
 public:
     double compare;
 
@@ -20,11 +21,13 @@ public:
     void setPpid(int);
     void setMemUsage(double);
     void setCpuUsage(double);
+    void setThUsage(double);
     std::string getName() const;
     int getPid() const;
     int getPpid() const;
     double getMemUsage() const;
     double getCpuUsage() const;
+    double getThUsage() const;
 };
 
 #endif // PROCESS_H

@@ -29,6 +29,10 @@ void Process::setCpuUsage(double cpu){
     this->cpuUsage = cpu;
 }
 
+void Process::setThUsage(double th){
+    this->thUsage = th;
+}
+
 std::string Process::getName() const{
     return this->name;
 }
@@ -47,4 +51,8 @@ double Process::getMemUsage() const{
 
 double Process::getCpuUsage() const{
     return this->cpuUsage;
+}
+
+double Process::getThUsage() const{
+    return this->thUsage;
 }

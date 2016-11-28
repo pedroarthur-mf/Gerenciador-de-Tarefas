@@ -103,7 +103,7 @@
             </item>
             <item>
              <property name="text">
-              <string>Outro filtro</string>
+              <string>Filtro Média de Uso (Mem-CPU)</string>
              </property>
             </item>
            </widget>

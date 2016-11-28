@@ -12,7 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(this, SIGNAL(signalMemoryGraph()), SLOT(slotMemoryGraph()));
     connect(this,SIGNAL(signalCPUGraph()),SLOT(slotCPUGraph()));
     connect(this, SIGNAL(signalSupplyGraph()), SLOT(slotSupplyGraph()));
+    connect(this, SIGNAL(signalSupplyRemGraph()), SLOT(slotSupplyRemGraph()));
     connect(this, SIGNAL(signalProcGraph()), SLOT(slotProcGraph()));
+    connect(ui->updateButton, SIGNAL(clicked(bool)),this, SLOT(slotBtnUpd()));
 
     configMemoryGraph();
     configCPUGraph();
@@ -37,7 +39,9 @@ void MainWindow::run(){
         this->thMemory = std::thread(&MainWindow::memoryGraph, this);
         this->thCPU = std::thread(&MainWindow::CPUGraph, this);
         this->thSupply = std::thread(&MainWindow::SupplyGraph, this);
+        this->thSupplyRem = std::thread(&MainWindow::SupplyRemGraph, this);
         this->thProc = std::thread(&MainWindow::procGraph, this);
+        this->thBtnUpd = std::thread(&MainWindow::btnUpdate, this);
         this->firstTime = false;
     }
 }
@@ -153,11 +157,22 @@ void MainWindow::SupplyGraph(){
     }
 }
 
+void MainWindow::SupplyRemGraph(){
+    while(true){
+        emit(signalSupplyRemGraph());
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+    }
+}
+
 void MainWindow::procGraph(){
     while(true){
         emit(signalProcGraph());
         std::this_thread::sleep_for(std::chrono::milliseconds(250));
     }
+}
+
+void MainWindow::btnUpdate(){
+    emit(signalBtnUpd());
 }
 
 void MainWindow::slotMemoryGraph(){
@@ -189,10 +204,17 @@ void MainWindow::slotSupplyGraph(){
     double key = time.elapsed()/1000.0;
 
     ui->grafSupply->graph(0)->addData(key, this->supply.calculateSupply());
-    ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining());
+
 
     ui->grafSupply->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafSupply->replot();
+}
+
+void MainWindow::slotSupplyRemGraph(){
+    static QTime time(QTime::currentTime());
+    double key = time.elapsed()/1000.0;
+
+    ui->grafTimeSupply->graph(0)->addData(key, this->supply.timeRemaining());
 
     ui->grafTimeSupply->xAxis->setRange(key, 60, Qt::AlignRight);
     ui->grafTimeSupply->replot();
@@ -203,8 +225,7 @@ void MainWindow::slotProcGraph(){
     this->json.generateJson(comp);
 }
 
-void MainWindow::on_updateButton_clicked()
-{
+void MainWindow::slotBtnUpd(){
     int comp = ui->comboBox->currentIndex();
     json.update(comp);
     ui->widget_3->repaint();
@@ -214,12 +235,21 @@ void MainWindow::on_updateButton_clicked()
 
 void MainWindow::on_killButton_clicked()
 {
+
     int pid = ui->txtPID->text().toInt();
 
     std::string tm = "kill -9 " + std::to_string(pid);
     if(pid != 0) system(tm.c_str());
 
+    int comp = ui->comboBox->currentIndex();
+    this->json.update(comp);
+
+    ui->widget_3->repaint();
+    ui->widget_3->reload();
+    ui->widget_3->update();
+
     ui->txtPID->setText(" ");
 
-    this->on_updateButton_clicked();
+
+//    emit(signalBtnUpd());
 }

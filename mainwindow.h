@@ -32,13 +32,17 @@ signals:
     void signalMemoryGraph();
     void signalCPUGraph();
     void signalSupplyGraph();
+    void signalSupplyRemGraph();
     void signalProcGraph();
+    void signalBtnUpd();
 
 private slots:
     void slotMemoryGraph();
     void slotCPUGraph();
     void slotSupplyGraph();
+    void slotSupplyRemGraph();
     void slotProcGraph();
+    void slotBtnUpd();
 
     void on_updateButton_clicked();
 
@@ -52,7 +56,9 @@ private:
     std::thread thMemory;
     std::thread thCPU;
     std::thread thSupply;
+    std::thread thSupplyRem;
     std::thread thProc;
+    std::thread thBtnUpd;
 
     Memory memory;
     CPU cpu;
@@ -62,7 +68,9 @@ private:
     void memoryGraph();
     void CPUGraph();
     void SupplyGraph();
+    void SupplyRemGraph();
     void procGraph();
+    void btnUpdate();
 };
 
 #endif // MAINWINDOW_H

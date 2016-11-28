@@ -9,7 +9,7 @@ toJson::toJson()
 
 void toJson::getProcessData(int comp){
     process.clear();
-    system("ps xao pid,ppid,%mem,%cpu,comm > datafile.txt");
+    system("ps xao pid,ppid,%mem,%cpu,nlwp,comm > datafile.txt");
 
     std::ifstream dataFile("datafile.txt");
     if (!dataFile.is_open()) {
@@ -23,13 +23,14 @@ void toJson::getProcessData(int comp){
         std::stringstream ss(lines);
         std::string name;
         int pid, ppid;
-        double cpu, mem;
-        ss >> pid >> ppid >> mem >> cpu;
+        double cpu, mem,thusage;
+        ss >> pid >> ppid >> mem >> cpu >> thusage;
 
         temp.setPid(pid);
         temp.setPpid(ppid);
         temp.setMemUsage(mem);
         temp.setCpuUsage(cpu);
+        temp.setThUsage(thusage);
 
         if(ss >> name){
             temp.setName(name);
@@ -37,14 +38,16 @@ void toJson::getProcessData(int comp){
 
         switch (comp) {
         case 0:
-            temp.compare = ((temp.getMemUsage()+0.01) * 100)/500;
+            temp.compare = (temp.getMemUsage()+0.01);
             break;
         case 1:
-            temp.compare = (temp.getCpuUsage()+0.01) * 10;
+            temp.compare = (temp.getCpuUsage()+0.01);
             break;
-        default:
-            temp.compare = 100;
+        case 2:
+            temp.compare = temp.getThUsage();
             break;
+        case 3:
+            temp.compare = ((temp.getMemUsage()+0.01))+((temp.getCpuUsage()+0.01))/2;
         }
         this->process[temp.getPpid()].push_back(temp);
     }
@@ -55,7 +58,7 @@ void toJson::generateJson(int comp){
     this->getProcessData(comp);
 
     std::ostringstream oss;
-    std::ofstream jsonFile(std::string(PATH) + "test.json", std::ios::trunc);
+    std::ofstream jsonFile(std::string(PATH) + "procs.json", std::ios::trunc);
 
     // ARQUIVO:
     oss << "{\n \"name\": \"processos\",\n \"children\":\n [\n";
@@ -88,7 +91,6 @@ void toJson::generateJson(int comp){
 }
 
 void toJson::update(int comp){
-    //process.clear();
     generateJson(comp);
 }
 
